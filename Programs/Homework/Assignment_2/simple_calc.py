@@ -47,7 +47,7 @@ def modulo_int(num1, num2):
 """ Prompt functions / User input functions. """
 
 def intro_prompt():
-    print('''Simple Calculator
+    print('''\t\tSimple Calculator
             ====================
             Options
             1. Add
