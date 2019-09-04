@@ -17,15 +17,11 @@ def hanoi_towers(n, fromRod, toRod):
 """ Main Program """
 
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 2:
     print('''
-          ERROR: Must pass in 3 arguments:
-          1: number of discs(int)
-          2: Initial Rod (int)
-          3: Last Rod (int)
+          ERROR: Must pass in 1 argument:
+          1: number of discs in the towers of hanoi.
           ''')
     sys.exit()
 discs = int(sys.argv[1])
-initialRod = int(sys.argv[2])
-lastRod = int(sys.argv[3])
-hanoi_towers(discs,initialRod,lastRod)
+hanoi_towers(discs,1,3)
