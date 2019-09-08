@@ -24,4 +24,4 @@ if len(sys.argv) < 2:
           ''')
     sys.exit()
 discs = int(sys.argv[1])
-hanoi_towers(discs,1,3)
+hanoi_towers(discs, 1, 3)
