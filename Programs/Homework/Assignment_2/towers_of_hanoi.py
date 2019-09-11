@@ -4,7 +4,7 @@ Author: Oscar Lopez.
 '''
 import sys
 
-def hanoi_towers(n, fromRod, toRod):
+def hanoi_towers(n, fromRod = 1, toRod = 3):
     if n == 1:
         print("Move disk from %s to rod %s"%(fromRod, toRod))
         return
@@ -24,4 +24,4 @@ if len(sys.argv) < 2:
           ''')
     sys.exit()
 discs = int(sys.argv[1])
-hanoi_towers(discs, 1, 3)
+hanoi_towers(discs)
