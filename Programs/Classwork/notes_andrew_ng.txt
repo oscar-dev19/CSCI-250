@@ -1,0 +1,23 @@
+speech --> maps --> ads *start small*
+
+automating tasks
+eg. reading x-ray images
+
+What AI can do * Things valuable for your business
+	- cross functional teams : AI Experts and subject matter experts
+
+brainstorm 6 projects pick 2 to invest in 
+
+Find the right use cases
+	- find a systematic approach in specialized tasks
+
+AI ideas / tech (not widely used / known):
+	1 ) Systematic Engineering Descipline
+		- 1 day sprints (Agile Dev) Write software by day, train by night, fix by morning.
+	2 ) Transition from Big Data to Small Data.
+	3 ) Method Reinforcement Learning (Meta-Learning)
+		- Robotics
+		- Build several different simulators of the robot with slightly different variables
+		  that allows the machine to learn and adapt to different situations <-- meta learning.
+			- better adaptation technique.
+

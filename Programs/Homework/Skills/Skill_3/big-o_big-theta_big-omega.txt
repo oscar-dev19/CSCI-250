@@ -1,0 +1,5 @@
+Oscar Lopez
+Skill 3: Comparing big-o, big-omega, and big-theta analysis
+Date: Sep 14, 2019
+
+
