@@ -62,7 +62,6 @@ def merge_data(*argv):
             merged_data.append(data_list)
     return merged_data
 
-#TODO: Edit function to write to output file delimited by tabs.
 def output_data(filename, data):
     """
     Writes data to an output file.
