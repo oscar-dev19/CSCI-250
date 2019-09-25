@@ -37,50 +37,48 @@ def clean_data(data):
 
 def parse_file(open_file):
     """
-    Parses data from an opened file into a list of data.
+    Parses data from an opened file into a dictionary data.
     Parameters:
-        open_file : File of data to be parsed.
+        (File) open_file : File of data to be parsed.
     """
-    parsed_data = list()
-    # Read pass the header line and ignore it.
+    parsed_data_dict = dict()
+    #ignore the header of the file
     open_file.readline()
     for line in open_file:
-        line = clean_data(line)
-        parsed_data.append(line.split('\t'))
-    return parsed_data
+        data = clean_data(line)
+        data_list = data.split('\t')
+        symbol = data_list[0]
+        parsed_data_dict.update(
+            {
+                symbol:{
+                    'Name': data_list[1],
+                    'Last Sale': data_list[2],
+                    'Market Cap': data_list[3],
+                    'ADR TSO': data_list[4],
+                    'IPO Year': data_list[5],
+                    'Sector': data_list[6],
+                    'Industry': data_list[7],
+                    'Summary Quote': data_list[8]
+                }
+            }
+        )
+    return parsed_data_dict
 
 
-def merge_data(*argv):
-    """
-    Merges many data files into a single sorted list of data.
-    Parameters:
-    *argv : Lists of data that will be parsed into merged_data list.
-    """
+def merge_all_data(*argv):
     merged_data = list()
     for arg in argv:
-        for data_list in arg:
-            merged_data.append(data_list)
-    return merged_data
-
-def output_data(filename, data):
-    """
-    Writes data to an output file.
-    Parameters:
-        (String) filename: Name of file to be written to.
-        (list) data: Data to be written to file.
-    """
-    f_write = open(filename, "w+")
-    for line in data:
-        for element in line:
-            f_write.write(str(element) + '\t')
-        f_write.write('\n')
-    print('Finished writing data to %s'%(filename))
+        for line in arg:
 
 
 nasdaq_open = open_file('companylist_nasdaq.csv')
 nyse_open = open_file('companylist_nyse.csv')
 amex_open = open_file('companylist_amex.csv')
-nasdaq_data = parse_file(nasdaq_open)
-nyse_data = parse_file(nyse_open)
-amex_data = parse_file(amex_open)
-output_data('All_Data.tsv', sorted(merge_data(nasdaq_data, nyse_data, amex_data)))
+
+nasdaq_dict = parse_file(nasdaq_open)
+nyse_dict = parse_file(nyse_open)
+amex_dict = parse_file(amex_open)
+
+#print(nasdaq_dict.items())
+#print(nasdaq_dict['ZVO']['Market Cap'])
+print(merge_all_data(nasdaq_open, nyse_open, amex_open))
