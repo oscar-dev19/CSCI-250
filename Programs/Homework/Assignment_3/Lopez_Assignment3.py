@@ -7,19 +7,6 @@ Author: Oscar Lopez
 """
 
 
-def open_file(filename):
-    """
-    Opens a file and returns the opened file.
-    Parameters:
-        filename : String name of file to be opened.
-    """
-    try:
-        fopen = open(filename)
-    except:
-        print("ERROR: %s cannot be opened!"%(filename))
-    return fopen
-
-
 def clean_data(data):
     """
     Removes any trailing new lines, replaces '"' with tab delimiter, and
@@ -35,7 +22,7 @@ def clean_data(data):
     return data
 
 
-def parse_file(open_file):
+def parse_file(filename):
     """
     Parses data from an opened file into a dictionary data.
     Parameters:
@@ -43,10 +30,13 @@ def parse_file(open_file):
     """
     parsed_data_dict = dict()
     #ignore the header of the file
-    open_file.readline()
-    for line in open_file:
-        data = clean_data(line)
-        data_list = data.split('\t')
+    try:
+        fopen = open(filename)
+    except:
+        print(f'ERROR: Could not parse data from {filename}!')
+        return None
+    for line in fopen:
+        data_list = line.split('\t')
         symbol = data_list[0]
         parsed_data_dict.update(
             {
@@ -66,19 +56,46 @@ def parse_file(open_file):
 
 
 def merge_all_data(*argv):
+    """
+    Merges all data from different files into a single list of data.
+    Parameters:
+        (String) argv: name(s) of files with data to be merged.
+    """
     merged_data = list()
     for arg in argv:
-        for line in arg:
+        try:
+            fopen = open(arg)
+        except:
+            print(f'ERROR: Could not open {arg}! Disregarding file.')
+            continue
+        #skipping header line.
+        fopen.readline()
+        for line in fopen:
+            line = clean_data(line)
+            merged_data.append(line.split('\t'))
+        fopen.close()
+    return merged_data
 
 
-nasdaq_open = open_file('companylist_nasdaq.csv')
-nyse_open = open_file('companylist_nyse.csv')
-amex_open = open_file('companylist_amex.csv')
+def output_data_file(filename, data):
+    """
+    Writes data to an output file.
+    Parameters:
+        (String) filename: Name of file to be written to.
+        (list) data: Data to be written to file.
+    """
+    f_write = open(filename, "w+")
+    data.sort()
+    for line in data:
+        for element in line:
+            f_write.write(str(element) + '\t')
+        f_write.write('\n')
+    f_write.close()
+    print(f'Finished writing data to {filename}')
 
-nasdaq_dict = parse_file(nasdaq_open)
-nyse_dict = parse_file(nyse_open)
-amex_dict = parse_file(amex_open)
 
-#print(nasdaq_dict.items())
-#print(nasdaq_dict['ZVO']['Market Cap'])
-print(merge_all_data(nasdaq_open, nyse_open, amex_open))
+all_data = merge_all_data('companylist_nasdaq.csv', 'companylist_nyse.csv',
+                          'companylist_amex.csv')
+
+output_data_file('all_data.tsv',all_data)
+print(parse_file('all_data.tsv'))
