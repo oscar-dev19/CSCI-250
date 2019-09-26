@@ -94,8 +94,30 @@ def output_data_file(filename, data):
     print(f'Finished writing data to {filename}')
 
 
+def search_symbol(symbol, data):
+    """
+    Searhes for a symbol in a dictionary of data and returns its data as a
+    string.
+    Parameters:
+        (String) symbol: Company Symbol to be searched.
+        (dictionary) data: A dictionary of company data to be searched through.
+    """
+    symbol = symbol.upper()
+    if symbol in data:
+        company_symbol = symbol.upper()
+        company_name = data[symbol]['Name']
+        last_sale = data[symbol]['Last Sale']
+        market_cap = data[symbol]['Market Cap']
+        ipo_year = data[symbol]['IPO Year']
+        sector = data[symbol]['Sector']
+        industry = data[symbol]['Industry']
+
+        return f'{company_symbol}, {company_name}, {last_sale}, {market_cap}, {ipo_year}, {sector}, {industry}'
+    return None
+
 all_data = merge_all_data('companylist_nasdaq.csv', 'companylist_nyse.csv',
                           'companylist_amex.csv')
 
 output_data_file('all_data.tsv',all_data)
-print(parse_file('all_data.tsv'))
+keyed_data = parse_file('all_data.tsv')
+print(search_symbol('zm', keyed_data))
