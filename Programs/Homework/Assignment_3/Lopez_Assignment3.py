@@ -52,6 +52,7 @@ def parse_file(filename):
                 }
             }
         )
+    fopen.close()
     return parsed_data_dict
 
 
