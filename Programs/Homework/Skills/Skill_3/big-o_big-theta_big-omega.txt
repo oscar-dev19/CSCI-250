@@ -1,5 +1,19 @@
 Oscar Lopez
 Skill 3: Comparing big-o, big-omega, and big-theta analysis
-Date: Sep 14, 2019
+Date: Sep 25, 2019
 
+In general, Big O talks about the upper bounds of a running function. Meaning
+that 'big o' is really talking about the relationship of a function as its 
+input is reaching some value whether it is finite or an infinite value. 
+Mathematically this is similar as limits in calculus. In other words 'big o'
+is considering the worst-case scenario of a function.
 
+On the otherhand, big-theta talks about the upper and lower bounds of a function.
+Big theta is not concerned with the best case scenario or worst case scenario. 
+In general it is only concerned with how the function generally acts regardless
+of the inputs (parameters) of the function. In Mathematics this means big theta 
+is looking at whether the function is quadratic, linear, etc.
+
+Big-omega is similar to big-o but differs that big-omega is concerned with only 
+the lower bounds of a function (or the best-case scenario). Big-omega looks at 
+the best amount of time a function can run at.

@@ -1,0 +1,34 @@
+Based on how Google works I believe having code standards works in a business
+thats an engineering company. Keeping a consistent codebase thats formatted the
+same across all engineering teams helps prevent unnecessary formatting and 
+debugging headaches. For example the most common 'meme' in computer science has 
+to be the whole 'spaces vs tabs' conversations. Setting some guidelines and 
+standards allows this to be disregarded and also prevent a codebase from 
+functioning in one computer but not on another (syntax errors). Google mentions
+in the beginning of the documentation that it is recommended to use some 
+standard tool such as pylint to format code. Of course google also makes regards
+to some issues that can come across but does mention exceptions and ways to 
+go around it. 
+
+Of course having consistent formatting across all codebases also means more 
+consistent documentaion. With several teams needing to borrow eachother's 
+code or reviewing eachothers code it is beneficial to be familiar with the way
+code is documented and can make it easier for other teams to know what eachother's
+code is doing and what is expected. Google mentions on how to document classes,
+how to document licensing rights on the code, using docstrings, how to write 
+block and inline comments etc in their style guidelines. It even makes notes on
+making sure punctuation and spelling are to be correct and maintain proper 
+grammar when documenting your code.
+
+I also believe that having rules on what is to be returned or how particular 
+cases should be dealt with help automate code. Google has a lot of code 
+being shipped and reviewed constantly and having a set of rules of how the code
+should act allows the q/a teams to understand how to write their tests and be 
+familiar with how the code may act. 
+
+To conclude, I initially felt as though these guidelines are constrictive or 
+tedious. However after reading the guidelines and understanding in some way 
+how an engineering company as google works having a guideline makes sense. 
+I feel that every company or team should have something similar if not the 
+same. It can facilitate a lot of things and help keep the business consistent
+with their code base and clients.
