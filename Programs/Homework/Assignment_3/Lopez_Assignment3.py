@@ -22,60 +22,64 @@ def clean_data(data):
     return data
 
 
-def parse_file(filename):
+def parse_file_as_dict(*filename):
     """
     Parses data from an opened file into a dictionary data.
     Parameters:
-        (File) open_file : File of data to be parsed.
+        (String) *filename: File name(s) of data to be parsed as dictionary of data.
     """
     parsed_data_dict = dict()
-    #ignore the header of the file
-    try:
-        fopen = open(filename)
-    except:
-        print(f'ERROR: Could not parse data from {filename}!')
-        return None
-    for line in fopen:
-        data_list = line.split('\t')
-        symbol = data_list[0]
-        parsed_data_dict.update(
-            {
-                symbol:{
-                    'Name': data_list[1],
-                    'Last Sale': data_list[2],
-                    'Market Cap': data_list[3],
-                    'ADR TSO': data_list[4],
-                    'IPO Year': data_list[5],
-                    'Sector': data_list[6],
-                    'Industry': data_list[7],
-                    'Summary Quote': data_list[8]
-                }
-            }
-        )
-    fopen.close()
-    return parsed_data_dict
-
-
-def merge_all_data(*argv):
-    """
-    Merges all data from different files into a single list of data.
-    Parameters:
-        (String) argv: name(s) of files with data to be merged.
-    """
-    merged_data = list()
-    for arg in argv:
+    for f in filename:
         try:
-            fopen = open(arg)
+            fopen = open(f)
         except:
-            print(f'ERROR: Could not open {arg}! Disregarding file.')
+            print(f'ERROR: Could not parse data from {f}!')
             continue
-        #skipping header line.
+        #ignore header of file.
         fopen.readline()
         for line in fopen:
             line = clean_data(line)
-            merged_data.append(line.split('\t'))
+            data_list = line.split('\t')
+            symbol = data_list[0]
+            parsed_data_dict.update(
+                {
+                    symbol:{
+                        'Name': data_list[1],
+                        'Last Sale': data_list[2],
+                        'Market Cap': data_list[3],
+                        'ADR TSO': data_list[4],
+                        'IPO Year': data_list[5],
+                        'Sector': data_list[6],
+                        'Industry': data_list[7],
+                        'Summary Quote': data_list[8]
+                    }
+                }
+            )
         fopen.close()
-    return merged_data
+    return parsed_data_dict
+
+
+def parse_file_as_list(*filename):
+    """
+    Parses all data from file(s) as a list.
+    Parameters:
+        (String) *filename: File name(s) of data to be parsed as a list of
+        data.
+    """
+    parsed_data_list = list()
+    for f in filename:
+        try:
+            fopen = open(f)
+        except:
+            print(f'ERROR: Could not parse data from {f}!')
+            continue
+        #ignore header of file.
+        fopen.readline()
+        for line in fopen:
+            line = clean_data(line)
+            data_list = line.split('\t')
+            parsed_data_list.append(data_list)
+    return parsed_data_list
 
 
 def output_data_file(filename, data):
@@ -95,30 +99,98 @@ def output_data_file(filename, data):
     print(f'Finished writing data to {filename}')
 
 
-def search_symbol(symbol, data):
+def search_symbol(symbol, dict_data):
     """
-    Searhes for a symbol in a dictionary of data and returns its data as a
-    string.
+    Searches for a company symbol and returns its data as a formatted string if
+    found.Returns None otherwise.
     Parameters:
-        (String) symbol: Company Symbol to be searched.
-        (dictionary) data: A dictionary of company data to be searched through.
+        (String) symbol: Company tag to be searched for.
+        (dict) dict_data: Dictionary of data to be searched through.
     """
     symbol = symbol.upper()
-    if symbol in data:
-        company_symbol = symbol.upper()
-        company_name = data[symbol]['Name']
-        last_sale = data[symbol]['Last Sale']
-        market_cap = data[symbol]['Market Cap']
-        ipo_year = data[symbol]['IPO Year']
-        sector = data[symbol]['Sector']
-        industry = data[symbol]['Industry']
-
-        return f'{company_symbol}, {company_name}, {last_sale}, {market_cap}, {ipo_year}, {sector}, {industry}'
+    if symbol in dict_data:
+        name = dict_data[symbol]['Name']
+        last_sale = dict_data[symbol]['Last Sale']
+        market_cap = dict_data[symbol]['Market Cap']
+        ipo_year = dict_data[symbol]['IPO Year']
+        sector = dict_data[symbol]['Sector']
+        industry = dict_data[symbol]['Industry']
+        return f'{symbol}, {name}, {last_sale}, {market_cap}, {ipo_year}, {sector}, {industry}'
     return None
 
-all_data = merge_all_data('companylist_nasdaq.csv', 'companylist_nyse.csv',
-                          'companylist_amex.csv')
+def get_top_15_marketcap(data):
+    """
+    Gets the top 15 companies based on their marketcap.
+    Parameters:
+        (list)data: A compiled list of lists of company data.
+    """
+    top_15_marketcap = list()
+    all_company_marketcap = list()
+    for line in data:
+        company_tag = line[0]
+        company_marketcap = line[3]
+        all_company_marketcap.append([company_marketcap, company_tag])
+    all_company_marketcap.sort(reverse=True)
+    for i in range(0,15):
+        top_15_marketcap.append(all_company_marketcap[i])
+    return top_15_marketcap
 
-output_data_file('all_data.tsv',all_data)
-keyed_data = parse_file('all_data.tsv')
-print(search_symbol('zm', keyed_data))
+
+def display_menu():
+    """
+    Returns the main menu of the program.
+    """
+    return """
+            Lopez's CompanyList Data Analyzer
+            ======================================
+            1 : Export to merged/sorted(by stock symbol) CSV file.
+            2 : Search by stock symbol.
+            3 : Display 15 Companies with the highest MarketCap value.
+            4 : Exit
+            """
+
+
+def promptChoice(prompt):
+    """
+    Returns the numerical choice of a prompt. Otherwise returns None.
+    """
+    try:
+        return int(input(prompt))
+    except ValueError:
+        return None
+
+""" Main Program. """
+# Parsing and preparing csv datasets.
+data_dict = parse_file_as_dict('companylist_nasdaq.csv',
+                               'companylist_nyse.csv',
+                               'companylist_amex.csv')
+data_list = parse_file_as_list('companylist_nasdaq.csv',
+                               'companylist_nyse.csv',
+                               'companylist_amex.csv')
+
+print(display_menu())
+while True:
+    try:
+        user_choice = int(promptChoice('> '))
+    except:
+        print('Plese enter a valid numerical value!')
+        continue
+    if user_choice == 1:
+        filename = input('What will be the name of the file? ')
+        output_data_file(filename, data_list)
+        print(f'Sorted data exported to {filename}')
+    elif user_choice == 2:
+        company_symbol = input('Enter company symbol: ')
+        result = search_symbol(company_symbol, data_dict)
+        if result:
+            print(result)
+        else:
+            print(f'Sorry, {company_symbol} not found!')
+    elif user_choice == 3:
+        for company in enumerate(get_top_15_marketcap(data_list)):
+            print(f'{company[0] + 1} : Company: {company[1][1]} : MarketCap: {company[1][0]}')
+    elif user_choice == 4:
+        print('Exiting.')
+        break
+    else:
+        print('Please enter a valid choice from the menu!')
