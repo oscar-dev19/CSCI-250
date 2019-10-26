@@ -58,7 +58,7 @@ def parse_file_as_dict(*filename):
         fopen.close()
     return parsed_data_dict
 
-
+#TODO(2) Remove and maybe just parsed all data as a dictionary.
 def parse_file_as_list(*filename):
     """
     Parses all data from file(s) as a list.
@@ -118,6 +118,7 @@ def search_symbol(symbol, dict_data):
         return f'{symbol}, {name}, {last_sale}, {market_cap}, {ipo_year}, {sector}, {industry}'
     return None
 
+#TODO(1) NOT WORKING - pass data as dictionary instead.
 def get_top_15_marketcap(data):
     """
     Gets the top 15 companies based on their marketcap.
@@ -164,6 +165,7 @@ def promptChoice(prompt):
 data_dict = parse_file_as_dict('companylist_nasdaq.csv',
                                'companylist_nyse.csv',
                                'companylist_amex.csv')
+# TODO(3) UPDATE Funtionality.
 data_list = parse_file_as_list('companylist_nasdaq.csv',
                                'companylist_nyse.csv',
                                'companylist_amex.csv')
