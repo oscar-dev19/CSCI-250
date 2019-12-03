@@ -1,0 +1,70 @@
+Sprint = 1:Plan 2:Design 3:Build 4:Test 5:Review 6:Launch
+
+LEAN
+---
+Eliminate waste
+improve process
+boost innovation
+
+Reduce overhead + Reduce Costs
+
+Pillars of LEAN Dev:
+1: Continuous Improvement
+2: Respect for People
+3: Lightweight Leadership
+
+KANBAN
+---
+Highly visual
+Popular among lean teams.
+Organization is based on prioritization
+
+
+Dynamic Systems Development Method (DSDM)
+---
+8 principles:
+1 Focus on business / client needs
+2 Deliver on time
+3 collaborate
+4 Never compromise quality
+5 Build incrementailly from firm foundations
+6 Develop iteratively
+7 Communicate continuously and clearly
+8 Demonstrate control
+
+Extreme Programming (XP)
+---
+Developed by Kent Beck
+
+12 supporting practices:
+
+1 Planning Game
+2 Small Releases
+3 Customer Acceptance Tests
+4 Simple Design
+5 Pair Programming
+6 Test-Driven Development
+7 Refactoring
+8 Continuous Integration
+9 Collective Code ownership
+10 Coding Standards
+11 Metaphor = each sprint has a name for it
+12 Sustainable Pace
+
+
+Tools
+---
+JIRA
+Pivotal Tracer
+VersionOne
+PlanBox
+Confluence = Collaboration tool for documentation
+Github
+Jenkins, Hudson, Amazon Pipeline CI/CD (icludes tests, coverages) = automated tests (goes through ALL TESTING PHASES) and possilby performance tuning/tests.
+
+
+
+
+
+
+
